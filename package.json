@@ -6,21 +6,33 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "npx tsc",
-		"start": "ts-node --esm src/main.ts"
+		"start": "ts-node --experimental-modules ./src/main.ts"
 	},
 	"keywords": [],
 	"author": "Matthew Hanson",
 	"license": "ISC",
 	"devDependencies": {
 		"@types/inquirer": "^9.0.3",
+		"@types/jest": "^29.4.0",
 		"jest": "^29.4.2",
 		"nodemon": "^2.0.20",
+		"ts-jest": "^29.0.5",
 		"ts-node": "^10.9.1",
 		"typescript": "^4.9.5"
 	},
 	"type": "module",
 	"jest": {
-		"transform": {}
+		"transform": {
+			"^.+\\.(ts|tsx)$": [
+				"ts-jest",
+				{
+					"useESM": true
+				}
+			]
+		},
+		"extensionsToTreatAsEsm": [
+			".ts"
+		]
 	},
 	"dependencies": {
 		"chalk": "^5.2.0",
