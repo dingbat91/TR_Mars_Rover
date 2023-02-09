@@ -32,7 +32,8 @@
 		},
 		"extensionsToTreatAsEsm": [
 			".ts"
-		]
+		],
+		"preset": "ts-jest"
 	},
 	"dependencies": {
 		"chalk": "^5.2.0",

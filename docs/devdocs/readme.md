@@ -34,7 +34,7 @@ Functionality will include
 I plan to lay the code out into a few seperate files and folders
 
 Grid - this will contain all data in relation to grid generation and maintanence. It should resolve down into a grid object that can be passed around to functions involving the rover
-Rover - this will contain all the data and functions in regard to BASE rover functionality, this will not include any installed modules. Which will extend off a different function
+vehicle - this will contain all the data and functions in regard to vehicle functionality, this will not include any installed modules. Which will extend off a different function
 Features - this will contain all code and information to terrain features and their effect on the game world.
 Modules - this will contain all code and information in regards to modules installable onto the rover object.
 
