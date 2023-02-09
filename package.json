@@ -1,0 +1,23 @@
+{
+	"name": "tr_mars_rover",
+	"version": "0.0.1",
+	"description": "A solution for the Mars Returners Kata provided by Tech Returners",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "Matthew Hanson",
+	"license": "ISC",
+	"devDependencies": {
+		"jest": "^29.4.2",
+		"typescript": "^4.9.5"
+	},
+	"type": "module",
+	"jest": {
+		"transform": {}
+	},
+	"dependencies": {
+		"colors": "^1.4.0"
+	}
+}
