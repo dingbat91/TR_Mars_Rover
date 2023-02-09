@@ -21,8 +21,8 @@ export async function MainMenu() {
 			disabled: false,
 		},
 		{
-			name: "quit",
-			value: "quit",
+			name: "Exit",
+			value: "exit",
 			short: "quit",
 			disabled: false,
 		},
@@ -40,5 +40,5 @@ export async function MainMenu() {
 	];
 
 	const RESULT = await inquirer.prompt(menuOptions);
-	return RESULT;
+	return RESULT.mainMenuChoice;
 }

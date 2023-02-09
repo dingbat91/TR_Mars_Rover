@@ -1,15 +1,36 @@
+import { GameMenu } from "./menus/GameMenu";
 import { MainMenu } from "./menus/MainMenu";
 import { GameGrid } from "./types/grid/grid";
 
 async function main() {
-	let menuResult = await MainMenu();
-	console.log(menuResult);
+	let menuResult: string = await MainMenu();
 
-	if ((menuResult.mainMenuChoice = "new")) {
-		gameloop(new GameGrid());
+	switch (menuResult) {
+		case "new": {
+			gameloop(new GameGrid());
+			break;
+		}
+		case "exit": {
+			console.log("Goodbye!");
+			return 0;
+			break;
+		}
 	}
 }
 
-async function gameloop(grid: GameGrid) {}
+//UI functionality - not unit tested
+async function gameloop(grid: GameGrid) {
+	let running = true;
+	while (running) {
+		grid.displayGrid();
+		console.log("----------");
+		const choice = await GameMenu();
+
+		if (choice === "exit") {
+			running = false;
+			return;
+		}
+	}
+}
 
 main();
