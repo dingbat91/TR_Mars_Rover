@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "npx tsc",
-		"start": "ts-node --experimental-modules ./src/main.ts"
+		"start": "ts-node  ./src/main.ts"
 	},
 	"keywords": [],
 	"author": "Matthew Hanson",
