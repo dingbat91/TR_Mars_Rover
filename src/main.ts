@@ -22,11 +22,12 @@ async function main() {
 //UI functionality - not unit tested
 async function gameloop(grid: GameGrid) {
 	let activeRover = new Rover(grid);
-	activeRover.initRover();
+	activeRover.initVic();
 	let running = true;
 	while (running) {
 		grid.displayGrid();
 		console.log("----------");
+		console.log(grid.grid.length);
 		const choice = await GameMenu();
 
 		if (choice === "exit") {
