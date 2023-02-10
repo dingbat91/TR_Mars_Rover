@@ -6,7 +6,7 @@ let counter = 1;
 /**Utility class to extend from,
  * Allows a class to have an automatically generated ID
  *
- * @param {number} id - The unique ID of the class.
+ * @type {number} id - The unique ID of the class.
  *
  * */
 export class uniqueID {
