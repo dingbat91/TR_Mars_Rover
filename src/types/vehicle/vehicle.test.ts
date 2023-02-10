@@ -82,12 +82,14 @@ describe("Rover Function tests", () => {
 	});
 
 	describe("Misc Function Tests", () => {
-		const TESTBOARD = new GameGrid();
-		const TESTROVER = new Rover(TESTBOARD);
-		TESTROVER.initVic(5, 5);
-		expect(TESTROVER.reportLocation()).toStrictEqual({
-			gridLoc: `5,5`,
-			direction: "S",
+		test("Location Report Test", () => {
+			const TESTBOARD = new GameGrid();
+			const TESTROVER = new Rover(TESTBOARD);
+			TESTROVER.initVic(5, 5);
+			expect(TESTROVER.reportLocation()).toStrictEqual({
+				gridLoc: `5,5`,
+				direction: "S",
+			});
 		});
 	});
 });
