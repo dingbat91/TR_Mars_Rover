@@ -4,7 +4,7 @@
 	"description": "A solution for the Mars Returners Kata provided by Tech Returners",
 	"main": "./src/main.ts",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"test": "jest",
 		"build": "npx tsc",
 		"start": "ts-node  ./src/main.ts"
 	},
