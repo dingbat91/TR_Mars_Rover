@@ -13,7 +13,7 @@ type cardinals = "N" | "S" | "E" | "W";
 abstract class vehicle extends uniqueID {
 	x: number = 0;
 	y: number = 0;
-	direction: cardinals = "N";
+	direction: cardinals = "S";
 
 	constructor() {
 		super();
@@ -52,6 +52,16 @@ export class Rover extends vehicle {
 		this.y = moveY;
 	}
 
+	turn(turnDirection: "Left" | "Right") {
+		const directions: cardinals[] = ["N", "E", "S", "W"];
+		const currentIndex = directions.indexOf(this.direction);
+
+		if (turnDirection === "Left") {
+			this.direction = directions[(currentIndex + 3) % 4];
+		} else if (turnDirection === "Right") {
+			this.direction = directions[(currentIndex + 1) % 4];
+		}
+	}
 	initRover(x: number = 0, y: number = 0) {
 		this.board.grid[x][y].vehicles = this;
 	}
