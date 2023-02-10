@@ -30,6 +30,7 @@ export class GameGridSquare extends uniqueID {
 export class GameGrid {
 	grid: GameGridSquare[][];
 
+	//Constructor - builds inital grid
 	constructor() {
 		const XLENGTH = 10;
 		const YLENGTH = 10;
@@ -42,7 +43,7 @@ export class GameGrid {
 		}
 	}
 
-	//UI Output - not unit tested.
+	//UI code, not unit tested
 	displayGrid() {
 		//
 		let displaygrid: string[][] = [];
