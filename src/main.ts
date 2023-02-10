@@ -25,14 +25,27 @@ async function gameloop(grid: GameGrid) {
 	activeRover.initVic();
 	let running = true;
 	while (running) {
+		let locData = activeRover.reportLocation();
 		grid.displayGrid();
 		console.log("----------");
-		console.log(grid.grid.length);
+		console.log(
+			`--Location: ${locData.gridLoc} - Direction: ${locData.direction}--`
+		);
 		const choice = await GameMenu();
-
-		if (choice === "exit") {
-			running = false;
-			return;
+		console.log(choice);
+		switch (choice.gamemenu) {
+			case "move": {
+				activeRover.move(choice.repeatval);
+				break;
+			}
+			case "turn": {
+				activeRover.turn(choice.turnmenu, choice.repeatval);
+				break;
+			}
+			case "exit": {
+				running = false;
+				return;
+			}
 		}
 	}
 }

@@ -34,42 +34,38 @@ abstract class vehicle extends uniqueID {
 	 * @returns
 	 */
 	move(repeat: number = 1) {
-		//set movement direction
 		for (let i = 0; i < repeat; i++) {
-			let movex = this.x;
-			let movey = this.y;
+			let moveX = this.x;
+			let moveY = this.y;
+
 			switch (this.direction) {
-				case "S": {
-					movey = this.y + 1;
+				case "S":
+					moveY = this.y + 1;
 					break;
-				}
-				case "E": {
-					movex = this.x + 1;
+				case "E":
+					moveX = this.x + 1;
 					break;
-				}
-				case "W": {
-					movex = this.x - 1;
+				case "W":
+					moveX = this.x - 1;
 					break;
-				}
-				case "N": {
-					movey = this.y - 1;
+				case "N":
+					moveY = this.y - 1;
 					break;
-				}
 			}
 
 			if (
-				movex < 0 ||
-				movey < 0 ||
-				movex > this.board.grid.length ||
-				movey > this.board.grid[0].length
+				moveX < 0 ||
+				moveY < 0 ||
+				moveX >= this.board.grid.length ||
+				moveY >= this.board.grid[0].length
 			) {
 				return -101;
 			}
 
-			this.board.grid[this.x][this.y].vehicles = "Empty";
-			this.board.grid[movex][movey].vehicles = this;
-			this.x = movex;
-			this.y = movey;
+			this.board.grid[this.y][this.x].vehicles = "Empty";
+			this.board.grid[moveY][moveX].vehicles = this;
+			this.x = moveX;
+			this.y = moveY;
 		}
 	}
 
@@ -77,7 +73,7 @@ abstract class vehicle extends uniqueID {
 	 * Turns the Vehicle 90 degrees per step (to one of the functional cardinal directions(N,S,E,W)
 	 * Intercardinal directions (NW,SE,SW,NW) are not implemented.
 	 * @param turnDirection - Which direction to turn accepts "Left" or "Right"
-	 * @param repeat - How many times tot
+	 * @param repeat - How many times to turn
 	 */
 	turn(turnDirection: "Left" | "Right", repeat: number = 1) {
 		const directions: cardinals[] = ["N", "E", "S", "W"];

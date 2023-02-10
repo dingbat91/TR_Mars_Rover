@@ -1,4 +1,4 @@
-import { GameGrid, GameGridSquare } from "./grid";
+import { GameGrid } from "./grid";
 
 describe("Grid Construction Tests", () => {
 	test("should Initiate correct Grid", () => {

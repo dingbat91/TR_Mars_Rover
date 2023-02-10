@@ -65,7 +65,7 @@ describe("Rover Function tests", () => {
 		TESTROVER.initVic(5, 5);
 		TESTROVER.move();
 		expect(TESTBOARD.grid[5][5].vehicles).toContain("Empty");
-		expect(TESTBOARD.grid[5][6].vehicles).toStrictEqual(TESTROVER);
+		expect(TESTBOARD.grid[6][5].vehicles).toStrictEqual(TESTROVER);
 		expect(TESTROVER.y).toBe(6);
 		expect(TESTROVER.x).toBe(5);
 	});
@@ -76,7 +76,7 @@ describe("Rover Function tests", () => {
 		TESTROVER.turn("Right", 2);
 		TESTROVER.move();
 		expect(TESTBOARD.grid[5][5].vehicles).toContain("Empty");
-		expect(TESTBOARD.grid[5][4].vehicles).toStrictEqual(TESTROVER);
+		expect(TESTBOARD.grid[4][5].vehicles).toStrictEqual(TESTROVER);
 		expect(TESTROVER.y).toBe(4);
 		expect(TESTROVER.x).toBe(5);
 	});
