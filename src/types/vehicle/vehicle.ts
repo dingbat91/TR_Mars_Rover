@@ -1,7 +1,9 @@
 // This file contains all type information regarding vehicles
 
+import inquirer from "inquirer";
 import { GameGrid } from "../grid/grid";
 import { uniqueID } from "../utils/counter";
+import { AnyKey } from "../utils/pressanykey";
 type cardinals = "N" | "S" | "E" | "W";
 
 /**
@@ -11,58 +13,95 @@ type cardinals = "N" | "S" | "E" | "W";
  * @param {cardinals} direction - the direction the vehicle is point. can be N,S,E or W
  */
 abstract class vehicle extends uniqueID {
+	board: GameGrid;
 	x: number = 0;
 	y: number = 0;
 	direction: cardinals = "S";
-
-	constructor() {
-		super();
-	}
-}
-
-export class Rover extends vehicle {
-	private board: GameGrid;
 
 	constructor(inputBoard: GameGrid) {
 		super();
 		this.board = inputBoard;
 	}
-
-	private move(board: GameGrid, moveX?: number, moveY?: number) {
-		//Check if we go out of grid boundry
-		if (!moveX) {
-			moveX = this.x;
-		}
-		if (!moveY) {
-			moveY = this.y;
-		}
-
-		if (
-			moveX >= board.grid[0].length ||
-			moveY >= board.grid[1].length ||
-			board.grid[0].length - moveX < 0 ||
-			board.grid[1].length - moveX < 0
-		) {
-			console.log(
-				"You Stand at the edge of the void, gaze into it and dispair"
-			);
-			return;
-		}
-		this.x = moveX;
-		this.y = moveY;
+	initVic(x: number = 0, y: number = 0) {
+		this.board.grid[y][x].vehicles = this;
+		this.x = x;
+		this.y = y;
 	}
 
-	turn(turnDirection: "Left" | "Right") {
+	/**
+	 * Moves the Vehicle Based on the cardinal direction contained in this.direction
+	 * @param repeat
+	 * @returns
+	 */
+	move(repeat: number = 1) {
+		//set movement direction
+		for (let i = 0; i < repeat; i++) {
+			let movex = this.x;
+			let movey = this.y;
+			switch (this.direction) {
+				case "S": {
+					movey = this.y + 1;
+					break;
+				}
+				case "E": {
+					movex = this.x + 1;
+					break;
+				}
+				case "W": {
+					movex = this.x - 1;
+					break;
+				}
+				case "N": {
+					movey = this.y - 1;
+					break;
+				}
+			}
+
+			if (
+				movex < 0 ||
+				movey < 0 ||
+				movex > this.board.grid.length ||
+				movey > this.board.grid[0].length
+			) {
+				return -101;
+			}
+
+			this.board.grid[this.x][this.y].vehicles = "Empty";
+			this.board.grid[movex][movey].vehicles = this;
+			this.x = movex;
+			this.y = movey;
+		}
+	}
+
+	/**
+	 * Turns the Vehicle 90 degrees per step (to one of the functional cardinal directions(N,S,E,W)
+	 * Intercardinal directions (NW,SE,SW,NW) are not implemented.
+	 * @param turnDirection - Which direction to turn accepts "Left" or "Right"
+	 * @param repeat - How many times tot
+	 */
+	turn(turnDirection: "Left" | "Right", repeat: number = 1) {
 		const directions: cardinals[] = ["N", "E", "S", "W"];
-		const currentIndex = directions.indexOf(this.direction);
-
-		if (turnDirection === "Left") {
-			this.direction = directions[(currentIndex + 3) % 4];
-		} else if (turnDirection === "Right") {
-			this.direction = directions[(currentIndex + 1) % 4];
+		for (let i = 0; i < repeat; i++) {
+			let currentIndex = directions.indexOf(this.direction);
+			if (turnDirection === "Left") {
+				this.direction = directions[(currentIndex + 3) % 4];
+			} else if (turnDirection === "Right") {
+				this.direction = directions[(currentIndex + 1) % 4];
+			}
 		}
 	}
-	initRover(x: number = 0, y: number = 0) {
-		this.board.grid[x][y].vehicles = this;
+
+	reportLocation() {
+		let obj = { gridLoc: `${this.y},${this.x}`, direction: this.direction };
+		return obj;
+	}
+}
+
+/**
+ * Class for a ground based Rover object
+ */
+export class Rover extends vehicle {
+	constructor(inputBoard: GameGrid) {
+		super(inputBoard);
 	}
 }
