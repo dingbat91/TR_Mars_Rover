@@ -2,7 +2,7 @@
 
 import inquirer from "inquirer";
 import { GameGrid } from "../grid/grid";
-import { uniqueID } from "../../types/utils/counter";
+import { uniqueID } from "../misc/counter";
 import { AnyKey } from "../../types/utils/pressanykey";
 type cardinals = "N" | "S" | "E" | "W";
 

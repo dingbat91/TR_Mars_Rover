@@ -1,7 +1,7 @@
 //all types and classes containing the layout.
 
-import { uniqueID } from "../../types/utils/counter";
-import { TerrainFeature } from "../../types/features/feature";
+import { uniqueID } from "../misc/counter";
+import { TerrainFeature } from "../features/feature";
 import { Rover } from "../vehicle/vehicle";
 
 /**
