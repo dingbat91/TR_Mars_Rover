@@ -1,8 +1,10 @@
 //all types and classes containing the layout.
 
 import { uniqueID } from "../misc/counter";
-import { TerrainFeature } from "../features/feature";
+import { TerrainFeature } from "../../types/features/feature";
 import { Rover } from "../vehicle/vehicle";
+import chalk from "chalk";
+import chalkTemplate from "chalk-template";
 
 /**
  * Class for the grid squares, should be constructed in an multidimension array, each item representing that square on the grid.
@@ -10,23 +12,39 @@ import { Rover } from "../vehicle/vehicle";
  * Extends UniqueID for a unique Identifier number
  * @param Title - Title
  * @param features[] - an array consisting of {@link TerrainFeature} objects
- *
+ * @param vehicles - Contains either "Empty" or a reference to the vehicle located there.
  */
 export class GameGridSquare extends uniqueID {
 	Title?: string;
-	features?: TerrainFeature[];
+	features: TerrainFeature[] = [];
 	vehicles: Rover | "Empty";
+	private static _featurelist: { [key: string]: TerrainFeature } = {
+		mountain: {
+			type: "Mountain",
+			icon: "^",
+			canPass: false,
+			color: "red",
+			displayPriority: 1,
+		},
+	};
 
 	constructor() {
 		super();
 		this.vehicles = "Empty";
+		this.TerrainGeneration();
+	}
+
+	//random terrain feature generation
+	private TerrainGeneration() {
+		const chance = Math.random();
+		if (chance > 0.6) {
+			this.features?.push(
+				structuredClone(GameGridSquare._featurelist.mountain)
+			);
+		}
 	}
 }
 
-/**
- * Class for the main game grid.
- * @param grid - The array of the game grid itself, consisting of an array of {@link GameGridSquare} objects
- */
 export class GameGrid {
 	grid: GameGridSquare[][];
 
@@ -52,9 +70,7 @@ export class GameGrid {
 			displaygrid[x] = [];
 			for (let y in this.grid[1]) {
 				//check terrain icons
-				if (this.grid[x][y].features === undefined) {
-					displaygrid[x][y] = this.getSquareIcon(this.grid[x][y]);
-				}
+				displaygrid[x][y] = this.getSquareIcon(this.grid[x][y]);
 			}
 		}
 
@@ -73,11 +89,21 @@ export class GameGrid {
 	 * @returns String "[X]" where X is the icon selected. If empty it will result in an icon of "[ ]"
 	 */
 	private getSquareIcon(square: GameGridSquare) {
-		let icon = "[ ]";
+		let icon = "[   ]";
 		if (square.vehicles instanceof Rover) {
-			icon = "[R]";
-		} else if (square.features) {
-			// add logic to determine icon based on square.features
+			icon = chalk.redBright("[ R ]");
+			return icon;
+		} else if (square.features.length > 0) {
+			const HIGHESTFEATURE = square.features.reduce((prev, curr) => {
+				return prev.displayPriority > curr.displayPriority ? prev : curr;
+			});
+			if (HIGHESTFEATURE.color) {
+				icon = `[ ${HIGHESTFEATURE.icon} ]`;
+			} else {
+				icon = `[ ${HIGHESTFEATURE.icon} ]`;
+			}
+		} else {
+			return icon;
 		}
 		return icon;
 	}
