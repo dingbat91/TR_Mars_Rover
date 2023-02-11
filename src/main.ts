@@ -1,4 +1,5 @@
 import Audic from "audic";
+import chalk from "chalk";
 import terminalkit from "terminal-kit";
 import { GameMenu } from "./menus/GameMenu";
 import { MainMenu } from "./menus/MainMenu";
@@ -11,6 +12,8 @@ async function main() {
 	await terminal.drawImage("src\\media\\mars.png", {
 		shrink: { width: 40, height: 40 },
 	});
+	console.log(chalk.bgRed.bold("---Welcome to the Mars Rover Program!---"));
+	console.log(chalk.bgRed.bold("---    Written by Matthew Hanson!    ---"));
 	//------------------
 	//Audio Code--------
 	const audic = new Audic("\\src\\media\\audio\\StarTrek.mp3");
@@ -24,14 +27,13 @@ async function main() {
 	let menuResult: string = await MainMenu();
 	switch (menuResult) {
 		case "new": {
-			audic.pause();
 			audic.destroy();
 			GameLoop(new GameGrid());
 			break;
 		}
 		case "exit": {
 			console.log("Goodbye!");
-			audic.pause();
+
 			audic.destroy();
 			return;
 		}
