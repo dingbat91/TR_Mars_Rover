@@ -3,8 +3,8 @@ import chalk from "chalk";
 import terminalkit from "terminal-kit";
 import { GameMenu } from "./menus/GameMenu";
 import { MainMenu } from "./menus/MainMenu";
-import { GameGrid } from "./types/grid/grid";
-import { Rover } from "./types/vehicle/vehicle";
+import { GameGrid } from "./classes/grid/grid";
+import { Rover } from "./classes/vehicle/vehicle";
 
 async function main() {
 	//Opening Screen Loading
