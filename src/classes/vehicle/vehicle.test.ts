@@ -64,7 +64,7 @@ describe("Rover Function tests", () => {
 		const TESTROVER = new Rover(TESTBOARD);
 		TESTROVER.initVic(5, 5);
 		TESTROVER.move();
-		expect(TESTBOARD.grid[5][5].vehicles).toContain("Empty");
+		expect(TESTBOARD.grid[5][5].vehicles).toStrictEqual("Empty");
 		expect(TESTBOARD.grid[6][5].vehicles).toStrictEqual(TESTROVER);
 		expect(TESTROVER.y).toBe(6);
 		expect(TESTROVER.x).toBe(5);

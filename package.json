@@ -4,7 +4,7 @@
 	"description": "A solution for the Mars Returners Kata provided by Tech Returners",
 	"main": "./src/main.ts",
 	"scripts": {
-		"test": "jest",
+		"test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
 		"build": "npx tsc",
 		"start": "ts-node  ./src/main.ts"
 	},
@@ -25,6 +25,9 @@
 	},
 	"type": "module",
 	"jest": {
+		"globals":{
+			"useESM":true
+		},
 		"transform": {
 			"^.+\\.(ts|tsx)$": [
 				"ts-jest",
