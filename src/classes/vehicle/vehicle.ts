@@ -2,8 +2,8 @@
 
 import inquirer from "inquirer";
 import { GameGrid } from "../grid/grid";
-import { uniqueID } from "../utils/counter";
-import { AnyKey } from "../utils/pressanykey";
+import { uniqueID } from "../misc/counter";
+import { AnyKey } from "../../types/utils/pressanykey";
 type cardinals = "N" | "S" | "E" | "W";
 
 /**
@@ -24,6 +24,7 @@ abstract class vehicle extends uniqueID {
 	}
 	initVic(x: number = 0, y: number = 0) {
 		this.board.grid[y][x].vehicles = this;
+		this.board.grid[y][x].features = [];
 		this.x = x;
 		this.y = y;
 	}
@@ -37,7 +38,6 @@ abstract class vehicle extends uniqueID {
 		for (let i = 0; i < repeat; i++) {
 			let moveX = this.x;
 			let moveY = this.y;
-
 			switch (this.direction) {
 				case "S":
 					moveY = this.y + 1;
@@ -59,13 +59,21 @@ abstract class vehicle extends uniqueID {
 				moveX >= this.board.grid.length ||
 				moveY >= this.board.grid[0].length
 			) {
-				return -101;
+				return "You have hit the edge of the world. Look onwards and dispaire";
 			}
 
+			if (
+				this.board.grid[moveY][moveX].features.some(
+					(feature) => feature.canPass === false
+				)
+			) {
+				return "BONK - There's something in the way.";
+			}
 			this.board.grid[this.y][this.x].vehicles = "Empty";
 			this.board.grid[moveY][moveX].vehicles = this;
 			this.x = moveX;
 			this.y = moveY;
+			return 0;
 		}
 	}
 

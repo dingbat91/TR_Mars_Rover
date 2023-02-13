@@ -3,9 +3,13 @@ import chalk from "chalk";
 import terminalkit from "terminal-kit";
 import { GameMenu } from "./menus/GameMenu";
 import { MainMenu } from "./menus/MainMenu";
-import { GameGrid } from "./types/grid/grid";
-import { Rover } from "./types/vehicle/vehicle";
+import { GameGrid } from "./classes/grid/grid";
+import { Rover } from "./classes/vehicle/vehicle";
 
+/*
+Opening UI Menu
+Not unit tested as it's UI
+*/
 async function main() {
 	//Opening Screen Loading
 	const terminal = terminalkit.terminal;
@@ -41,15 +45,21 @@ async function main() {
 	//-----------------
 }
 
-//UI functionality - not unit tested
+/*
+Core loop for the program
+Mostly UI so not unit tested.
+*/
 async function GameLoop(grid: GameGrid) {
+	let issue: string | number = 0;
 	let activeRover = new Rover(grid);
 	activeRover.initVic();
 	let running = true;
 	while (running) {
 		let locData = activeRover.reportLocation();
+
 		grid.displayGrid();
 		console.log("----------");
+		if (issue != 0) console.log(chalk.bgRedBright(issue));
 		console.log(
 			`--Location: ${locData.gridLoc} - Direction: ${locData.direction}--`
 		);
@@ -57,7 +67,7 @@ async function GameLoop(grid: GameGrid) {
 		console.log(choice);
 		switch (choice.gamemenu) {
 			case "move": {
-				activeRover.move(choice.repeatval);
+				issue = activeRover.move(choice.repeatval)!;
 				break;
 			}
 			case "turn": {
