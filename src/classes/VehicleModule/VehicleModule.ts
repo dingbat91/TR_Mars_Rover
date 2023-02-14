@@ -1,7 +1,7 @@
 import { uniqueID } from "../misc/counter";
 
 //List of mounting locations for a module
-type MountLocation =
+export type MountLocation =
 	| "Top"
 	| "Bottom"
 	| "Left"
