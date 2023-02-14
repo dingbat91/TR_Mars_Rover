@@ -1,16 +1,16 @@
-import { GameGrid } from "../grid/grid";
+import { MapGrid } from "../grid/grid";
 import { Camera } from "../VehicleModule/VehicleModule";
 import { Rover } from "./vehicle";
 
 describe("Vehicle Constructor Tests", () => {
 	test("Rover initialization", () => {
-		const TESTBOARD = new GameGrid();
+		const TESTBOARD = new MapGrid();
 		const TESTROVER = new Rover(TESTBOARD);
 		TESTROVER.initVic(3, 3);
 		expect(TESTBOARD.grid[3][3].vehicles).toBe(TESTROVER);
 	});
 	test("Rover initialization(default)", () => {
-		const TESTBOARD = new GameGrid();
+		const TESTBOARD = new MapGrid();
 		const TESTROVER = new Rover(TESTBOARD);
 		TESTROVER.initVic();
 		expect(TESTBOARD.grid[0][0].vehicles).toBe(TESTROVER);
@@ -20,21 +20,21 @@ describe("Vehicle Constructor Tests", () => {
 describe("Rover Function tests", () => {
 	describe("Turning Tests", () => {
 		test("Left Turn", () => {
-			const testboard = new GameGrid();
+			const testboard = new MapGrid();
 			const testRover = new Rover(testboard);
 			testRover.turn("Left");
 			expect(testRover.direction).toBe("E");
 		});
 
 		test("Right Turn", () => {
-			const testboard = new GameGrid();
+			const testboard = new MapGrid();
 			const testRover = new Rover(testboard);
 			testRover.turn("Right");
 			expect(testRover.direction).toBe("W");
 		});
 
 		test(" 180 Right Turn", () => {
-			const testboard = new GameGrid();
+			const testboard = new MapGrid();
 			const testRover = new Rover(testboard);
 			testRover.turn("Right");
 			testRover.turn("Right");
@@ -42,7 +42,7 @@ describe("Rover Function tests", () => {
 		});
 
 		test(" 180 Left Turn", () => {
-			const testboard = new GameGrid();
+			const testboard = new MapGrid();
 			const testRover = new Rover(testboard);
 			testRover.turn("Left");
 			testRover.turn("Left");
@@ -50,7 +50,7 @@ describe("Rover Function tests", () => {
 		});
 
 		test("OH BOY A 360!", () => {
-			const testboard = new GameGrid();
+			const testboard = new MapGrid();
 			const testRover = new Rover(testboard);
 			testRover.turn("Right");
 			testRover.turn("Right");
@@ -62,7 +62,7 @@ describe("Rover Function tests", () => {
 
 	describe("Moving Tests", () => {
 		test("Move South", () => {
-			const TESTBOARD = new GameGrid();
+			const TESTBOARD = new MapGrid();
 			const TESTROVER = new Rover(TESTBOARD);
 			TESTROVER.initVic(5, 5);
 			TESTROVER.move();
@@ -72,7 +72,7 @@ describe("Rover Function tests", () => {
 			expect(TESTROVER.x).toBe(5);
 		});
 		test("Move North", () => {
-			const TESTBOARD = new GameGrid();
+			const TESTBOARD = new MapGrid();
 			const TESTROVER = new Rover(TESTBOARD);
 			TESTROVER.initVic(5, 5);
 			TESTROVER.turn("Right", 2);
@@ -85,7 +85,7 @@ describe("Rover Function tests", () => {
 	});
 
 	describe("Module tests", () => {
-		const TESTBOARD = new GameGrid();
+		const TESTBOARD = new MapGrid();
 		const TESTROVER = new Rover(TESTBOARD);
 		describe("Camera Mounting Tests", () => {
 			test("should add Front Camera", () => {
@@ -122,7 +122,7 @@ describe("Rover Function tests", () => {
 
 	describe("Misc Function Tests", () => {
 		test("Location Report Test", () => {
-			const TESTBOARD = new GameGrid();
+			const TESTBOARD = new MapGrid();
 			const TESTROVER = new Rover(TESTBOARD);
 			TESTROVER.initVic(5, 5);
 			expect(TESTROVER.reportLocation()).toStrictEqual({

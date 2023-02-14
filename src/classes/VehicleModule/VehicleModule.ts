@@ -37,13 +37,19 @@ export const ModuleList = ["Camera"];
 export type ModuleChoices = "Camera";
 export type ModuleTypes = Camera;
 
-//Factory Class
-//Provides abstraction for constructing classes dynamically. Needed for ModuleMenu
+/**
+ * A factory pattern for creating modules dynamically using Inquirer
+ * @param buildClass - name of Class to be built
+ * @param location - Passed on Location on the vehicle
+ * @param args -- any additional arguments
+ * @returns
+ */
 export function ModuleFactory(
 	buildClass: ModuleChoices,
 	location: MountLocation,
 	args?: any
 ) {
+	//Add Module constructors as if statements here
 	//Camera Constructor
 	if (buildClass == "Camera") {
 		return new Camera(location);

@@ -14,7 +14,7 @@ import chalkTemplate from "chalk-template";
  * @param features[] - an array consisting of {@link TerrainFeature} objects
  * @param vehicles - Contains either "Empty" or a reference to the vehicle located there.
  */
-export class GameGridSquare extends uniqueID {
+export class MapGridSquare extends uniqueID {
 	Title?: string;
 	features: TerrainFeature[] = [];
 	vehicles: Rover | "Empty";
@@ -35,18 +35,17 @@ export class GameGridSquare extends uniqueID {
 	}
 
 	//random terrain feature generation
+	//Not sure how to test this in jest right now since it's randomised
 	private TerrainGeneration() {
 		const chance = Math.random();
 		if (chance > 0.6) {
-			this.features?.push(
-				structuredClone(GameGridSquare._featurelist.mountain)
-			);
+			this.features?.push(structuredClone(MapGridSquare._featurelist.mountain));
 		}
 	}
 }
 
-export class GameGrid {
-	grid: GameGridSquare[][];
+export class MapGrid {
+	grid: MapGridSquare[][];
 
 	//Constructor - builds inital grid
 	constructor() {
@@ -56,12 +55,14 @@ export class GameGrid {
 		for (let i = 0; i < XLENGTH - 1; i++) {
 			this.grid[i] = [];
 			for (let j = 0; j < YLENGTH - 1; j++) {
-				this.grid[i][j] = new GameGridSquare();
+				this.grid[i][j] = new MapGridSquare();
 			}
 		}
 	}
 
 	//UI code, not unit tested
+	//Displays the current grid in a square of output [ ]
+	// Rovers have an R, Mountains have ^ and empty space are just [ ]
 	displayGrid() {
 		//
 		let displaygrid: string[][] = [];
@@ -86,9 +87,9 @@ export class GameGrid {
 	/**
 	 * Returns the icon to display on the Grid
 	 * @param square - Square to be checked
-	 * @returns String "[X]" where X is the icon selected. If empty it will result in an icon of "[ ]"
+	 * @returns String "[X]" where X is the icon selected. If empty it will result in an icon of "[   ]" Rover is an "[ R ]" and a mountain is an "[ ^ ]"
 	 */
-	private getSquareIcon(square: GameGridSquare) {
+	private getSquareIcon(square: MapGridSquare) {
 		let icon = "[   ]";
 		if (square.vehicles instanceof Rover) {
 			icon = chalk.redBright("[ R ]");

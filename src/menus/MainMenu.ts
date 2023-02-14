@@ -15,7 +15,7 @@ export async function MainMenu() {
 	//initial root menu choices
 	const mainMenuChoices: Choice[] = [
 		{
-			name: "new game",
+			name: "New Map",
 			value: "new",
 			short: "new",
 			disabled: false,

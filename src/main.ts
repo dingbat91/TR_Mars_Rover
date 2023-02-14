@@ -3,7 +3,7 @@ import chalk from "chalk";
 import terminalkit from "terminal-kit";
 import { GameMenu } from "./menus/GameMenu";
 import { MainMenu } from "./menus/MainMenu";
-import { GameGrid } from "./classes/grid/grid";
+import { MapGrid } from "./classes/grid/grid";
 import { Rover } from "./classes/vehicle/vehicle";
 import { ModuleMenu } from "./menus/ModuleMenu";
 
@@ -36,7 +36,7 @@ async function main() {
 	switch (menuResult) {
 		case "new": {
 			audic.destroy();
-			GameLoop(new GameGrid());
+			GameLoop(new MapGrid());
 			break;
 		}
 		case "exit": {
@@ -53,13 +53,14 @@ async function main() {
 Core loop for the program
 Mostly UI so not unit tested.
 */
-async function GameLoop(grid: GameGrid) {
+async function GameLoop(grid: MapGrid) {
 	let issue: string | number = 0;
 	let activeRover = new Rover(grid);
 	await ModuleMenu(activeRover);
 	activeRover.initVic();
 	let running = true;
 	while (running) {
+		console.clear();
 		let locData = activeRover.reportLocation();
 
 		grid.displayGrid();

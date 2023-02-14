@@ -19,13 +19,13 @@ export async function ModuleMenu(Rover: Rover) {
 	// Root Menu choices
 	const MODULEMENUROOT: Choice[] = [
 		{
-			name: "new",
+			name: "New",
 			value: "new",
 			short: "new",
 			disabled: false,
 		},
 		{
-			name: "edit",
+			name: "Edit",
 			value: "edit",
 			short: "edit",
 			disabled: false,
