@@ -4,7 +4,7 @@ This is Matthew Hanson's github repository for the Tech Returners Mars Rover Pro
 
 ## Main Menu
 
-![/docs/docimgs/MainMenu.png]
+![Main Menu Image](/docs/docimgs/MainMenu.png)
 
 The main menu currently contains two options:
 New Map - Starts a new session.
@@ -25,6 +25,8 @@ Edit - will allow a user to select an existing module, then edit it (Currently o
 Deploy to surface - Moves onto the main screen.
 
 ## Map Screen
+
+![Map Screen Image](/docs/docimgs/MapScreen.png)
 
 The map Screen is the main interface for moving the rover. It displays the map as a grid.
 Underneath is the Rovers location in XY coordinates (0,0 being the top left corner) and it's Cardinal Direction
