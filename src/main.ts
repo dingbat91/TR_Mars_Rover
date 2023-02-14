@@ -5,6 +5,7 @@ import { GameMenu } from "./menus/GameMenu";
 import { MainMenu } from "./menus/MainMenu";
 import { GameGrid } from "./classes/grid/grid";
 import { Rover } from "./classes/vehicle/vehicle";
+import { ModuleMenu } from "./menus/ModuleMenu";
 
 /*
 Opening UI Menu
@@ -12,6 +13,7 @@ Not unit tested as it's UI
 */
 async function main() {
 	//Opening Screen Loading
+	console.clear();
 	const terminal = terminalkit.terminal;
 	await terminal.drawImage("src\\media\\mars.png", {
 		shrink: { width: 40, height: 40 },
@@ -19,6 +21,7 @@ async function main() {
 	console.log(chalk.bgRed.bold("---Welcome to the Mars Rover Program!---"));
 	console.log(chalk.bgRed.bold("---    Written by Matthew Hanson!    ---"));
 	//------------------
+
 	//Audio Code--------
 	const audic = new Audic("\\src\\media\\audio\\StarTrek.mp3");
 	audic.volume = 0.3;
@@ -27,6 +30,7 @@ async function main() {
 		console.log("There was an error! No cool music for you :(");
 	});
 	//------------------
+
 	//menu code---------
 	let menuResult: string = await MainMenu();
 	switch (menuResult) {
@@ -52,6 +56,7 @@ Mostly UI so not unit tested.
 async function GameLoop(grid: GameGrid) {
 	let issue: string | number = 0;
 	let activeRover = new Rover(grid);
+	await ModuleMenu(activeRover);
 	activeRover.initVic();
 	let running = true;
 	while (running) {

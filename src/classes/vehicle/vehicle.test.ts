@@ -89,32 +89,32 @@ describe("Rover Function tests", () => {
 		const TESTROVER = new Rover(TESTBOARD);
 		describe("Camera Mounting Tests", () => {
 			test("should add Front Camera", () => {
-				TESTROVER.addModule(new Camera("Front"));
+				TESTROVER.addModule("Camera", "Front");
 				expect(TESTROVER.modules["Front"].values).toContain<Camera>;
 			});
 
 			test("should add Back Camera", () => {
-				TESTROVER.addModule(new Camera("Back"));
+				TESTROVER.addModule("Camera", "Back");
 				expect(TESTROVER.modules["Back"].values).toContain<Camera>;
 			});
 
 			test("should add Left Camera", () => {
-				TESTROVER.addModule(new Camera("Left"));
+				TESTROVER.addModule("Camera", "Left");
 				expect(TESTROVER.modules["Left"].values).toContain<Camera>;
 			});
 
 			test("should add Right Camera", () => {
-				TESTROVER.addModule(new Camera("Right"));
+				TESTROVER.addModule("Camera", "Right");
 				expect(TESTROVER.modules["Right"].values).toContain<Camera>;
 			});
 
-			test("should add Right Camera", () => {
-				TESTROVER.addModule(new Camera("Right"));
-				expect(TESTROVER.modules["Right"].values).toContain<Camera>;
+			test("should add Back Camera", () => {
+				TESTROVER.addModule("Camera", "Top");
+				expect(TESTROVER.modules["Top"].values).toContain<Camera>;
 			});
 
 			test("should add Bottom Camera", () => {
-				TESTROVER.addModule(new Camera("Bottom"));
+				TESTROVER.addModule("Camera", "Bottom");
 				expect(TESTROVER.modules["Bottom"].values).toContain<Camera>;
 			});
 		});

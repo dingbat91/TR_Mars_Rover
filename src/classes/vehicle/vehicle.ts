@@ -1,10 +1,14 @@
 // This file contains all type information regarding vehicles
 
-import inquirer from "inquirer";
 import { GameGrid } from "../grid/grid";
 import { uniqueID } from "../misc/counter";
-import { AnyKey } from "../../types/utils/pressanykey";
-import { ModuleList } from "../VehicleModule/VehicleModule";
+import {
+	Camera,
+	ModuleChoices,
+	ModuleTypes,
+	MountLocation,
+	VehicleModule,
+} from "../VehicleModule/VehicleModule";
 type cardinals = "N" | "S" | "E" | "W";
 
 /**
@@ -18,7 +22,7 @@ abstract class vehicle extends uniqueID {
 	x: number = 0;
 	y: number = 0;
 	direction: cardinals = "S";
-	modules: { [key: string]: ModuleList[] };
+	modules: { [key: string]: ModuleTypes[] };
 
 	constructor(inputBoard: GameGrid) {
 		super();
@@ -111,8 +115,18 @@ abstract class vehicle extends uniqueID {
 		return obj;
 	}
 
-	addModule(newModule: ModuleList) {
-		this.modules[newModule.location].push(newModule);
+	addModule(name: ModuleChoices, location: MountLocation) {
+		if (name === "Camera") {
+			this.modules[location].push(new Camera(location));
+		}
+	}
+
+	removeModule(module: VehicleModule, location: MountLocation) {
+		this.modules[location].splice(
+			this.modules[location].findIndex(
+				(installedmodule) => installedmodule.id === module.id
+			)
+		);
 	}
 }
 

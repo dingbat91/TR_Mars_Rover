@@ -1,4 +1,6 @@
+import { Answers } from "inquirer";
 import { uniqueID } from "../misc/counter";
+import { Rover } from "../vehicle/vehicle";
 
 //List of mounting locations for a module
 export type MountLocation =
@@ -11,7 +13,7 @@ export type MountLocation =
 	| "Internal";
 
 //Base module abstract class
-abstract class VehicleModule extends uniqueID {
+export abstract class VehicleModule extends uniqueID {
 	location: MountLocation;
 
 	constructor(location: MountLocation) {
@@ -30,4 +32,20 @@ export class Camera extends VehicleModule {
 	}
 }
 
-export type ModuleList = Camera;
+//Types and array list of Modules, Insert a union type or new entry for each module
+export const ModuleList = ["Camera"];
+export type ModuleChoices = "Camera";
+export type ModuleTypes = Camera;
+
+//Factory Class
+//Provides abstraction for constructing classes dynamically. Needed for ModuleMenu
+export function ModuleFactory(
+	buildClass: ModuleChoices,
+	location: MountLocation,
+	args?: any
+) {
+	//Camera Constructor
+	if (buildClass == "Camera") {
+		return new Camera(location);
+	}
+}
