@@ -1,4 +1,5 @@
 import { GameGrid } from "../grid/grid";
+import { Camera } from "../VehicleModule/VehicleModule";
 import { Rover } from "./vehicle";
 
 describe("Vehicle Constructor Tests", () => {
@@ -59,26 +60,64 @@ describe("Rover Function tests", () => {
 		});
 	});
 
-	test("Move South", () => {
-		const TESTBOARD = new GameGrid();
-		const TESTROVER = new Rover(TESTBOARD);
-		TESTROVER.initVic(5, 5);
-		TESTROVER.move();
-		expect(TESTBOARD.grid[5][5].vehicles).toStrictEqual("Empty");
-		expect(TESTBOARD.grid[6][5].vehicles).toStrictEqual(TESTROVER);
-		expect(TESTROVER.y).toBe(6);
-		expect(TESTROVER.x).toBe(5);
+	describe("Moving Tests", () => {
+		test("Move South", () => {
+			const TESTBOARD = new GameGrid();
+			const TESTROVER = new Rover(TESTBOARD);
+			TESTROVER.initVic(5, 5);
+			TESTROVER.move();
+			expect(TESTBOARD.grid[5][5].vehicles).toStrictEqual("Empty");
+			expect(TESTBOARD.grid[6][5].vehicles).toStrictEqual(TESTROVER);
+			expect(TESTROVER.y).toBe(6);
+			expect(TESTROVER.x).toBe(5);
+		});
+		test("Move North", () => {
+			const TESTBOARD = new GameGrid();
+			const TESTROVER = new Rover(TESTBOARD);
+			TESTROVER.initVic(5, 5);
+			TESTROVER.turn("Right", 2);
+			TESTROVER.move();
+			expect(TESTBOARD.grid[5][5].vehicles).toStrictEqual("Empty");
+			expect(TESTBOARD.grid[4][5].vehicles).toStrictEqual(TESTROVER);
+			expect(TESTROVER.y).toBe(4);
+			expect(TESTROVER.x).toBe(5);
+		});
 	});
-	test("Move North", () => {
+
+	describe("Module tests", () => {
 		const TESTBOARD = new GameGrid();
 		const TESTROVER = new Rover(TESTBOARD);
-		TESTROVER.initVic(5, 5);
-		TESTROVER.turn("Right", 2);
-		TESTROVER.move();
-		expect(TESTBOARD.grid[5][5].vehicles).toContain("Empty");
-		expect(TESTBOARD.grid[4][5].vehicles).toStrictEqual(TESTROVER);
-		expect(TESTROVER.y).toBe(4);
-		expect(TESTROVER.x).toBe(5);
+		describe("Camera Mounting Tests", () => {
+			test("should add Front Camera", () => {
+				TESTROVER.addModule("Camera", "Front");
+				expect(TESTROVER.modules["Front"].values).toContain<Camera>;
+			});
+
+			test("should add Back Camera", () => {
+				TESTROVER.addModule("Camera", "Back");
+				expect(TESTROVER.modules["Back"].values).toContain<Camera>;
+			});
+
+			test("should add Left Camera", () => {
+				TESTROVER.addModule("Camera", "Left");
+				expect(TESTROVER.modules["Left"].values).toContain<Camera>;
+			});
+
+			test("should add Right Camera", () => {
+				TESTROVER.addModule("Camera", "Right");
+				expect(TESTROVER.modules["Right"].values).toContain<Camera>;
+			});
+
+			test("should add Back Camera", () => {
+				TESTROVER.addModule("Camera", "Top");
+				expect(TESTROVER.modules["Top"].values).toContain<Camera>;
+			});
+
+			test("should add Bottom Camera", () => {
+				TESTROVER.addModule("Camera", "Bottom");
+				expect(TESTROVER.modules["Bottom"].values).toContain<Camera>;
+			});
+		});
 	});
 
 	describe("Misc Function Tests", () => {

@@ -1,9 +1,14 @@
 // This file contains all type information regarding vehicles
 
-import inquirer from "inquirer";
 import { GameGrid } from "../grid/grid";
 import { uniqueID } from "../misc/counter";
-import { AnyKey } from "../../types/utils/pressanykey";
+import {
+	Camera,
+	ModuleChoices,
+	ModuleTypes,
+	MountLocation,
+	VehicleModule,
+} from "../VehicleModule/VehicleModule";
 type cardinals = "N" | "S" | "E" | "W";
 
 /**
@@ -17,11 +22,21 @@ abstract class vehicle extends uniqueID {
 	x: number = 0;
 	y: number = 0;
 	direction: cardinals = "S";
+	modules: { [key: string]: ModuleTypes[] };
 
 	constructor(inputBoard: GameGrid) {
 		super();
 		this.board = inputBoard;
+		this.modules = {
+			Top: [],
+			Bottom: [],
+			Left: [],
+			Right: [],
+			Front: [],
+			Back: [],
+		};
 	}
+
 	initVic(x: number = 0, y: number = 0) {
 		this.board.grid[y][x].vehicles = this;
 		this.board.grid[y][x].features = [];
@@ -98,6 +113,35 @@ abstract class vehicle extends uniqueID {
 	reportLocation() {
 		let obj = { gridLoc: `${this.y},${this.x}`, direction: this.direction };
 		return obj;
+	}
+
+	addModule(name: ModuleChoices, location: MountLocation) {
+		if (name === "Camera") {
+			this.modules[location].push(new Camera(location));
+		}
+	}
+
+	removeModule(module: VehicleModule, location: MountLocation) {
+		this.modules[location].splice(
+			this.modules[location].findIndex(
+				(installedmodule) => installedmodule.id === module.id
+			)
+		);
+	}
+
+	displayModules() {
+		console.log(`Module list:`);
+		for (const [key, value] of Object.entries(this.modules)) {
+			console.log(`------${key}-----`);
+			for (let x in value) {
+				if (value.length > 0) {
+					console.log(`- ${this.modules[key][x].name}`);
+				} else {
+					console.log(" ");
+				}
+			}
+			console.log(`--------------------------------`);
+		}
 	}
 }
 
