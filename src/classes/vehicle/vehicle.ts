@@ -4,6 +4,7 @@ import inquirer from "inquirer";
 import { GameGrid } from "../grid/grid";
 import { uniqueID } from "../misc/counter";
 import { AnyKey } from "../../types/utils/pressanykey";
+import { ModuleList } from "../VehicleModule/VehicleModule";
 type cardinals = "N" | "S" | "E" | "W";
 
 /**
@@ -17,11 +18,21 @@ abstract class vehicle extends uniqueID {
 	x: number = 0;
 	y: number = 0;
 	direction: cardinals = "S";
+	modules: { [key: string]: ModuleList[] };
 
 	constructor(inputBoard: GameGrid) {
 		super();
 		this.board = inputBoard;
+		this.modules = {
+			Top: [],
+			Bottom: [],
+			Left: [],
+			Right: [],
+			Front: [],
+			Back: [],
+		};
 	}
+
 	initVic(x: number = 0, y: number = 0) {
 		this.board.grid[y][x].vehicles = this;
 		this.board.grid[y][x].features = [];
@@ -98,6 +109,10 @@ abstract class vehicle extends uniqueID {
 	reportLocation() {
 		let obj = { gridLoc: `${this.y},${this.x}`, direction: this.direction };
 		return obj;
+	}
+
+	addModule(newModule: ModuleList) {
+		this.modules[newModule.location].push(newModule);
 	}
 }
 

@@ -29,3 +29,5 @@ export class Camera extends VehicleModule {
 		this.name = `Camera ${this.id}`;
 	}
 }
+
+export type ModuleList = Camera;
