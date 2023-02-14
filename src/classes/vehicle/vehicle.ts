@@ -128,6 +128,21 @@ abstract class vehicle extends uniqueID {
 			)
 		);
 	}
+
+	displayModules() {
+		console.log(`Module list:`);
+		for (const [key, value] of Object.entries(this.modules)) {
+			console.log(`------${key}-----`);
+			for (let x in value) {
+				if (value.length > 0) {
+					console.log(`- ${this.modules[key][x].name}`);
+				} else {
+					console.log(" ");
+				}
+			}
+			console.log(`--------------------------------`);
+		}
+	}
 }
 
 /**

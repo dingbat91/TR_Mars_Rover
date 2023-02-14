@@ -79,6 +79,11 @@ async function GameLoop(grid: GameGrid) {
 				activeRover.turn(choice.turnmenu, choice.repeatval);
 				break;
 			}
+			case "display": {
+				console.clear();
+				activeRover.displayModules();
+				break;
+			}
 			case "exit": {
 				running = false;
 				return;
