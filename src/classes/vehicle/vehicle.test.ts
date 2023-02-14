@@ -60,26 +60,28 @@ describe("Rover Function tests", () => {
 		});
 	});
 
-	test("Move South", () => {
-		const TESTBOARD = new GameGrid();
-		const TESTROVER = new Rover(TESTBOARD);
-		TESTROVER.initVic(5, 5);
-		TESTROVER.move();
-		expect(TESTBOARD.grid[5][5].vehicles).toStrictEqual("Empty");
-		expect(TESTBOARD.grid[6][5].vehicles).toStrictEqual(TESTROVER);
-		expect(TESTROVER.y).toBe(6);
-		expect(TESTROVER.x).toBe(5);
-	});
-	test("Move North", () => {
-		const TESTBOARD = new GameGrid();
-		const TESTROVER = new Rover(TESTBOARD);
-		TESTROVER.initVic(5, 5);
-		TESTROVER.turn("Right", 2);
-		TESTROVER.move();
-		expect(TESTBOARD.grid[5][5].vehicles).toStrictEqual("Empty");
-		expect(TESTBOARD.grid[4][5].vehicles).toStrictEqual(TESTROVER);
-		expect(TESTROVER.y).toBe(4);
-		expect(TESTROVER.x).toBe(5);
+	describe("Moving Tests", () => {
+		test("Move South", () => {
+			const TESTBOARD = new GameGrid();
+			const TESTROVER = new Rover(TESTBOARD);
+			TESTROVER.initVic(5, 5);
+			TESTROVER.move();
+			expect(TESTBOARD.grid[5][5].vehicles).toStrictEqual("Empty");
+			expect(TESTBOARD.grid[6][5].vehicles).toStrictEqual(TESTROVER);
+			expect(TESTROVER.y).toBe(6);
+			expect(TESTROVER.x).toBe(5);
+		});
+		test("Move North", () => {
+			const TESTBOARD = new GameGrid();
+			const TESTROVER = new Rover(TESTBOARD);
+			TESTROVER.initVic(5, 5);
+			TESTROVER.turn("Right", 2);
+			TESTROVER.move();
+			expect(TESTBOARD.grid[5][5].vehicles).toStrictEqual("Empty");
+			expect(TESTBOARD.grid[4][5].vehicles).toStrictEqual(TESTROVER);
+			expect(TESTROVER.y).toBe(4);
+			expect(TESTROVER.x).toBe(5);
+		});
 	});
 
 	describe("Module tests", () => {
