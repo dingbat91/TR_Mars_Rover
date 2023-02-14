@@ -93,7 +93,6 @@ abstract class vehicle extends uniqueID {
 			this.board.grid[moveY][moveX].vehicles = this;
 			this.x = moveX;
 			this.y = moveY;
-			return 0;
 		}
 	}
 
