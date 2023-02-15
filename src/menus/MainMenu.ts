@@ -1,4 +1,9 @@
-import inquirer, { Answers, ListQuestion } from "inquirer";
+import inquirer, {
+	Answers,
+	InputQuestion,
+	ListQuestion,
+	NumberQuestion,
+} from "inquirer";
 import Choice from "inquirer/lib/objects/choice";
 
 /**
@@ -29,7 +34,7 @@ export async function MainMenu() {
 	];
 
 	//Menu options object, add new options here for the menu layout
-	const menuOptions: ListQuestion[] = [
+	const menuOptions: (ListQuestion | NumberQuestion)[] = [
 		{
 			type: "list",
 			name: "mainMenuChoice",
@@ -37,8 +42,22 @@ export async function MainMenu() {
 			choices: mainMenuChoices,
 			prefix: "",
 		},
+		{
+			type: "number",
+			name: "xLength",
+			message: "How long in the X Axis?",
+			when: (ans) => ans.mainMenuChoice === "new",
+			validate: (ans) => (!isNaN(ans) ? true : "Must be a Number! Try Again"),
+		},
+		{
+			type: "number",
+			name: "yLength",
+			message: "How long in the Y Axis?",
+			when: (ans) => ans.mainMenuChoice === "new",
+			validate: (ans) => (!isNaN(ans) ? true : "Must be a Number! Try Again"),
+		},
 	];
 
 	const RESULT = await inquirer.prompt(menuOptions);
-	return RESULT.mainMenuChoice;
+	return RESULT;
 }
