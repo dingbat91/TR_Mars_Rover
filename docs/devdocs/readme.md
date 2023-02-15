@@ -18,14 +18,14 @@ The initial functionality of the project will be:
 Functionality will include:
 
 1. adding terrain features. These features will be able to influence the rover in some way (mountains stopping movement, pitfalls)
-2. Z axis movement. This will allow the rover to go up or down, displaying the grid.
+2. adding new rover functionality. Idea's so far includes sample grabbers, cameras
 3. Rover customisation. The rover will have "parts", additional objects that can be coded on to add features to the rover. Initial object will be a thruster for Z axis movement
 
 ### v0.03
 
 Functionality will include
 
-1. adding new rover functionality. Idea's so far includes sample grabbers, cameras
+1. Z axis movement. This will allow the rover to go up or down, displaying the grid.
 2. Random Grid generation/infinite grid generation - attempting to generate a random planet "surface" to work from.
 3. "Vision" system - implement a basic concept of raytracing to enable vision, only allowing the user to see the grid that the drone can actually see.
 

@@ -1,9 +1,14 @@
 // This file contains all type information regarding vehicles
 
-import inquirer from "inquirer";
-import { GameGrid } from "../grid/grid";
-import { uniqueID } from "../utils/counter";
-import { AnyKey } from "../utils/pressanykey";
+import { MapGrid } from "../grid/grid";
+import { uniqueID } from "../misc/counter";
+import {
+	Camera,
+	ModuleChoices,
+	ModuleTypes,
+	MountLocation,
+	VehicleModule,
+} from "../VehicleModule/VehicleModule";
 type cardinals = "N" | "S" | "E" | "W";
 
 /**
@@ -13,17 +18,33 @@ type cardinals = "N" | "S" | "E" | "W";
  * @param {cardinals} direction - the direction the vehicle is point. can be N,S,E or W
  */
 abstract class vehicle extends uniqueID {
-	board: GameGrid;
+	board: MapGrid;
 	x: number = 0;
 	y: number = 0;
 	direction: cardinals = "S";
+	modules: { [key: string]: ModuleTypes[] };
 
-	constructor(inputBoard: GameGrid) {
+	constructor(inputBoard: MapGrid) {
 		super();
 		this.board = inputBoard;
+		this.modules = {
+			Top: [],
+			Bottom: [],
+			Left: [],
+			Right: [],
+			Front: [],
+			Back: [],
+		};
 	}
+
+	/**
+	 * Places the Vehicle on the Grid
+	 * @param x - X position of the Vehicle
+	 * @param y - Y position of the Vehicle
+	 */
 	initVic(x: number = 0, y: number = 0) {
 		this.board.grid[y][x].vehicles = this;
+		this.board.grid[y][x].features = [];
 		this.x = x;
 		this.y = y;
 	}
@@ -37,7 +58,6 @@ abstract class vehicle extends uniqueID {
 		for (let i = 0; i < repeat; i++) {
 			let moveX = this.x;
 			let moveY = this.y;
-
 			switch (this.direction) {
 				case "S":
 					moveY = this.y + 1;
@@ -59,9 +79,16 @@ abstract class vehicle extends uniqueID {
 				moveX >= this.board.grid.length ||
 				moveY >= this.board.grid[0].length
 			) {
-				return -101;
+				return "You have hit the edge of the world. Look onwards and dispaire";
 			}
 
+			if (
+				this.board.grid[moveY][moveX].features.some(
+					(feature) => feature.canPass === false
+				)
+			) {
+				return "BONK - There's something in the way.";
+			}
 			this.board.grid[this.y][this.x].vehicles = "Empty";
 			this.board.grid[moveY][moveX].vehicles = this;
 			this.x = moveX;
@@ -87,9 +114,54 @@ abstract class vehicle extends uniqueID {
 		}
 	}
 
+	/**
+	 * Gives the rovers location and direction as an object
+	 * @returns {object} - Gridloc: X,Y string. direction: direction string.
+	 */
 	reportLocation() {
 		let obj = { gridLoc: `${this.y},${this.x}`, direction: this.direction };
 		return obj;
+	}
+
+	/**
+	 * Adds a module to the vehicle list
+	 * @param name String name of the Module, check VehicleModule for details
+	 * @param location - Location of the Module on the Rover. Can be "Top","Bottom","Left","Right","Front","Back"
+	 */
+	addModule(name: ModuleChoices, location: MountLocation) {
+		if (name === "Camera") {
+			this.modules[location].push(new Camera(location));
+		}
+	}
+	/**
+	 * Adds a module to the vehicle list
+	 * @param name String name of the Module, check VehicleModule for details
+	 * @param location - Location of the Module on the Rover. Can be "Top","Bottom","Left","Right","Front","Back"
+	 */
+	removeModule(module: VehicleModule, location: MountLocation) {
+		this.modules[location].splice(
+			this.modules[location].findIndex(
+				(installedmodule) => installedmodule.id === module.id
+			)
+		);
+	}
+
+	/**
+	 * Displays a list of modules currently installed on the vehicle.
+	 */
+	displayModules() {
+		console.log(`Module list:`);
+		for (const [key, value] of Object.entries(this.modules)) {
+			console.log(`------${key}-----`);
+			for (let x in value) {
+				if (value.length > 0) {
+					console.log(`- ${this.modules[key][x].name}`);
+				} else {
+					console.log(" ");
+				}
+			}
+			console.log(`--------------------------------`);
+		}
 	}
 }
 
@@ -97,7 +169,7 @@ abstract class vehicle extends uniqueID {
  * Class for a ground based Rover object
  */
 export class Rover extends vehicle {
-	constructor(inputBoard: GameGrid) {
+	constructor(inputBoard: MapGrid) {
 		super(inputBoard);
 	}
 }

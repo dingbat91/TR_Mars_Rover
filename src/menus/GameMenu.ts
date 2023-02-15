@@ -32,6 +32,12 @@ export async function GameMenu() {
 			disabled: false,
 		},
 		{
+			name: "Display Modules",
+			value: "display",
+			short: "display",
+			disabled: false,
+		},
+		{
 			name: "Exit",
 			value: "exit",
 			short: "exit",
