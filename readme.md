@@ -2,6 +2,10 @@
 
 This is Matthew Hanson's github repository for the Tech Returners Mars Rover Project.
 
+## Initiation
+
+To start, install the dependencies with "npm install" then run with "npm run start"
+
 ## Main Menu
 
 ![Main Menu Image](/docs/docimgs/MainMenu.png)
