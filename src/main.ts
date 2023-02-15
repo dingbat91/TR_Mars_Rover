@@ -15,20 +15,30 @@ async function main() {
 	//Opening Screen Loading
 	console.clear();
 	const terminal = terminalkit.terminal;
+	const PBAR = terminal.progressBar({
+		title: "Loading...",
+		width: 50,
+		barHeadChar: "#",
+	});
 	await terminal.drawImage("src\\media\\mars.png", {
 		shrink: { width: 40, height: 40 },
 	});
+	PBAR.update({ progress: 0.25 });
 	console.log(chalk.bgRed.bold("---Welcome to the Mars Rover Program!---"));
 	console.log(chalk.bgRed.bold("---    Written by Matthew Hanson!    ---"));
+	PBAR.update({ progress: 0.5 });
 	//------------------
 
 	//Audio Code--------
 	const audic = new Audic("\\src\\media\\audio\\StarTrek.mp3");
+	PBAR.update({ progress: 0.75 });
 	audic.volume = 0.3;
 	audic.currentTime = 5000;
 	await audic.play().catch((err) => {
 		console.log("There was an error! No cool music for you :(");
 	});
+	PBAR.update({ progress: 1, title: "Done!" });
+	PBAR.stop();
 	//------------------
 
 	//menu code---------
@@ -93,4 +103,5 @@ async function GameLoop(grid: MapGrid) {
 	}
 }
 
+//initiation
 main();
