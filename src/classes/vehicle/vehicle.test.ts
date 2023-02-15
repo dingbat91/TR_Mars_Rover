@@ -62,25 +62,47 @@ describe("Rover Function tests", () => {
 
 	describe("Moving Tests", () => {
 		test("Move South", () => {
-			const TESTBOARD = new MapGrid();
+			const TESTBOARD = new MapGrid(10, 10, false);
 			const TESTROVER = new Rover(TESTBOARD);
-			TESTROVER.initVic(5, 5);
+			TESTROVER.initVic(5, 5, "S");
 			TESTROVER.move();
 			expect(TESTBOARD.grid[5][5].vehicles).toStrictEqual("Empty");
 			expect(TESTBOARD.grid[6][5].vehicles).toStrictEqual(TESTROVER);
 			expect(TESTROVER.y).toBe(6);
 			expect(TESTROVER.x).toBe(5);
 		});
+
 		test("Move North", () => {
-			const TESTBOARD = new MapGrid();
+			const TESTBOARD = new MapGrid(10, 10, false);
 			const TESTROVER = new Rover(TESTBOARD);
-			TESTROVER.initVic(5, 5);
+			TESTROVER.initVic(5, 5, "S");
 			TESTROVER.turn("Right", 2);
 			TESTROVER.move();
 			expect(TESTBOARD.grid[5][5].vehicles).toStrictEqual("Empty");
 			expect(TESTBOARD.grid[4][5].vehicles).toStrictEqual(TESTROVER);
 			expect(TESTROVER.y).toBe(4);
 			expect(TESTROVER.x).toBe(5);
+		});
+	});
+
+	describe("Input Movement Tests", () => {
+		test("should Move to 1 3 Facing N", () => {
+			let TESTGRID = new MapGrid(5, 5, false);
+			let TESTROVER = new Rover(TESTGRID);
+			TESTROVER.initVic(1, 2, "N");
+			TESTROVER.inputMove("LMLMLMLMM");
+			expect(TESTROVER.x).toBe(1);
+			expect(TESTROVER.y).toBe(1);
+			expect(TESTROVER.direction).toBe("N");
+		});
+		test("should Move to 1 3 Facing N", () => {
+			let TESTGRID = new MapGrid(5, 5, false);
+			let TESTROVER = new Rover(TESTGRID);
+			TESTROVER.initVic(3, 3, "E");
+			TESTROVER.inputMove("MMRMMRMRRM");
+			expect(TESTROVER.x).toBe(5);
+			expect(TESTROVER.y).toBe(5);
+			expect(TESTROVER.direction).toBe("E");
 		});
 	});
 
@@ -122,9 +144,9 @@ describe("Rover Function tests", () => {
 
 	describe("Misc Function Tests", () => {
 		test("Location Report Test", () => {
-			const TESTBOARD = new MapGrid();
+			const TESTBOARD = new MapGrid(10, 10, false);
 			const TESTROVER = new Rover(TESTBOARD);
-			TESTROVER.initVic(5, 5);
+			TESTROVER.initVic(5, 5, "S");
 			expect(TESTROVER.reportLocation()).toStrictEqual({
 				gridLoc: `5,5`,
 				direction: "S",

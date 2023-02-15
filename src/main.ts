@@ -6,6 +6,7 @@ import { MainMenu } from "./menus/MainMenu";
 import { MapGrid } from "./classes/grid/grid";
 import { Rover } from "./classes/vehicle/vehicle";
 import { ModuleMenu } from "./menus/ModuleMenu";
+import inquirer, { Answers } from "inquirer";
 
 /*
 Opening UI Menu
@@ -24,7 +25,9 @@ async function main() {
 		shrink: { width: 40, height: 40 },
 	});
 	PBAR.update({ progress: 0.25 });
-	console.log(chalk.bgRed.bold("---Welcome to the Mars Rover Program!---"));
+	console.log(
+		chalk.bgRed.bold("---Welcome to the Australian Mars Rover Program!---")
+	);
 	console.log(chalk.bgRed.bold("---    Written by Matthew Hanson!    ---"));
 	PBAR.update({ progress: 0.5 });
 	//------------------
@@ -38,15 +41,16 @@ async function main() {
 		console.log("There was an error! No cool music for you :(");
 	});
 	PBAR.update({ progress: 1, title: "Done!" });
-	PBAR.stop();
 	//------------------
 
 	//menu code---------
-	let menuResult: string = await MainMenu();
-	switch (menuResult) {
+	let menuResult: Answers = await MainMenu();
+	switch (menuResult.mainMenuChoice) {
 		case "new": {
 			audic.destroy();
-			GameLoop(new MapGrid());
+			GameLoop(
+				new MapGrid(menuResult.xLength + 1, menuResult.yLength + 1, true)
+			);
 			break;
 		}
 		case "exit": {
@@ -63,22 +67,71 @@ async function main() {
 Core loop for the program
 Mostly UI so not unit tested.
 */
-async function GameLoop(grid: MapGrid) {
+async function GameLoop(mapGrid: MapGrid) {
+	//Error Code Variable
 	let issue: string | number = 0;
-	let activeRover = new Rover(grid);
+
+	//Initialise Rover
+	let activeRover = new Rover(mapGrid);
+
+	//adjust modules on rover
 	await ModuleMenu(activeRover);
-	activeRover.initVic();
+
+	//Inquirer for Rovers starter location and direction, located here due to a limitation of Inquirer
+	console.clear();
+	const ROVERANS: Answers = await inquirer.prompt([
+		{
+			type: "number",
+			name: "vehX",
+			message: "Where would you like the vehicle to start on the X axis?",
+			validate: (ans: number) =>
+				ans <= mapGrid.grid.length ? true : "It's fallen into space!",
+		},
+		{
+			type: "number",
+			name: "vehY",
+			message: "Where would you like the vehicle to start on the Y axis?",
+			validate: (ans: number) =>
+				ans <= mapGrid.grid[0].length ? true : "It's fallen into space!",
+		},
+		{
+			type: "list",
+			name: "cardinal",
+			message: "What direction is it facing in",
+			choices: [
+				{
+					name: "North",
+					value: "N",
+				},
+				{
+					name: "East",
+					value: "E",
+				},
+				{
+					name: "South",
+					value: "S",
+				},
+				{ name: "West", value: "W" },
+			],
+		},
+	]);
+	//Places the rover on the grid
+	activeRover.initVic(ROVERANS.vehX, ROVERANS.vehY, ROVERANS.cardinal);
+
+	// Main Loop
 	let running = true;
 	while (running) {
+		//display map
 		console.clear();
 		let locData = activeRover.reportLocation();
-
-		grid.displayGrid();
+		mapGrid.displayGrid();
 		console.log("----------");
 		if (issue != 0) console.log(chalk.bgRedBright(issue));
 		console.log(
 			`--Location: ${locData.gridLoc} - Direction: ${locData.direction}--`
 		);
+
+		//menu functions
 		const choice = await GameMenu();
 		console.log(choice);
 		switch (choice.gamemenu) {

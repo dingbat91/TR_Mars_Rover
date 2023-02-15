@@ -16,7 +16,7 @@ describe("Grid Construction Tests", () => {
 
 describe("Grid Icon Testing", () => {
 	test("should Display Rover Icon", () => {
-		const TESTGRID = new MapGrid();
+		const TESTGRID = new MapGrid(10, 10);
 		const TESTROVER = new Rover(TESTGRID);
 		TESTROVER.initVic(5, 5);
 		// @ts-expect-error
@@ -25,7 +25,7 @@ describe("Grid Icon Testing", () => {
 		);
 	});
 	test("should Display Empty Icon", () => {
-		const TESTGRID = new MapGrid();
+		const TESTGRID = new MapGrid(10, 10);
 		const TESTROVER = new Rover(TESTGRID);
 		TESTROVER.initVic(5, 5);
 		TESTGRID.grid[1][1].features = [];
@@ -33,7 +33,7 @@ describe("Grid Icon Testing", () => {
 		expect(TESTGRID.getSquareIcon(TESTGRID.grid[1][1])).toEqual("[   ]");
 	});
 	test("should Display Mountain Icon", () => {
-		const TESTGRID = new MapGrid();
+		const TESTGRID = new MapGrid(10, 10);
 		const TESTROVER = new Rover(TESTGRID);
 		TESTROVER.initVic(5, 5);
 		TESTGRID.grid[1][1].features.push(
