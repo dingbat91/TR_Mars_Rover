@@ -1,6 +1,7 @@
 # Mars Rover Project
 
 This is Matthew Hanson's github repository for the Tech Returners Mars Rover Project.
+Details on particular area's (Classes, functions etc) can be found in their appropriate folders.
 
 ## Initiation
 
