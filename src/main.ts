@@ -143,6 +143,10 @@ async function GameLoop(mapGrid: MapGrid) {
 				activeRover.turn(choice.turnmenu, choice.repeatval);
 				break;
 			}
+			case "input": {
+				activeRover.inputMove(choice.inputString);
+				break;
+			}
 			case "display": {
 				console.clear();
 				activeRover.displayModules();

@@ -165,9 +165,16 @@ abstract class vehicle extends uniqueID {
 		}
 	}
 
+	/**
+	 * Allows the vehicle to move via a prefefined Input String
+	 * @param input - Input String: L for left turn, R for right turn, M for Move
+	 */
 	inputMove(input: String) {
 		const Ifilter = ["L", "R", "M"];
-		const splitInput = input.split("").filter((item) => Ifilter.includes(item));
+		const splitInput = input
+			.toLocaleUpperCase()
+			.split("")
+			.filter((item) => Ifilter.includes(item));
 		splitInput.forEach((val) => {
 			switch (val) {
 				case "L":

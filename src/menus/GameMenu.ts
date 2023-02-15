@@ -32,6 +32,12 @@ export async function GameMenu() {
 			disabled: false,
 		},
 		{
+			name: "Input Move String",
+			value: "input",
+			short: "Input",
+			disabled: false,
+		},
+		{
 			name: "Display Modules",
 			value: "display",
 			short: "display",
@@ -81,6 +87,12 @@ export async function GameMenu() {
 			name: "repeatval",
 			message: "How many times?",
 			when: (ans) => ans.gamemenu === "move" || ans.gamemenu === "turn",
+		},
+		{
+			type: "input",
+			name: "inputString",
+			message: "Please input your Movement String here",
+			when: (ans) => ans.gamemenu === "input",
 		},
 	];
 
