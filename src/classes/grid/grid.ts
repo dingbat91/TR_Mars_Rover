@@ -28,18 +28,22 @@ export class MapGridSquare extends uniqueID {
 		},
 	};
 
-	constructor() {
+	constructor(Mountains: Boolean = true) {
 		super();
 		this.vehicles = "Empty";
-		this.TerrainGeneration();
+		this.TerrainGeneration(Mountains);
 	}
 
 	//random terrain feature generation
 	//Not sure how to test this in jest right now since it's randomised
-	private TerrainGeneration() {
+	private TerrainGeneration(Mountains: Boolean = true) {
 		const chance = Math.random();
-		if (chance > 0.6) {
-			this.features?.push(structuredClone(MapGridSquare._featurelist.mountain));
+		if (Mountains) {
+			if (chance > 0.6) {
+				this.features?.push(
+					structuredClone(MapGridSquare._featurelist.mountain)
+				);
+			}
 		}
 	}
 }
@@ -48,14 +52,14 @@ export class MapGrid {
 	grid: MapGridSquare[][];
 
 	//Constructor - builds inital grid
-	constructor() {
-		const XLENGTH = 10;
-		const YLENGTH = 10;
+	constructor(x = 5, y = 5, Mountains: boolean = true) {
+		const XLENGTH = x;
+		const YLENGTH = y;
 		this.grid = [];
 		for (let i = 0; i < XLENGTH - 1; i++) {
 			this.grid[i] = [];
 			for (let j = 0; j < YLENGTH - 1; j++) {
-				this.grid[i][j] = new MapGridSquare();
+				this.grid[i][j] = new MapGridSquare(Mountains);
 			}
 		}
 	}

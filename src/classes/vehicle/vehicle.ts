@@ -42,11 +42,12 @@ abstract class vehicle extends uniqueID {
 	 * @param x - X position of the Vehicle
 	 * @param y - Y position of the Vehicle
 	 */
-	initVic(x: number = 0, y: number = 0) {
+	initVic(x: number = 0, y: number = 0, direction: cardinals = "S") {
 		this.board.grid[y][x].vehicles = this;
 		this.board.grid[y][x].features = [];
 		this.x = x;
 		this.y = y;
+		this.direction = direction;
 	}
 
 	/**
@@ -162,6 +163,24 @@ abstract class vehicle extends uniqueID {
 			}
 			console.log(`--------------------------------`);
 		}
+	}
+
+	inputMove(input: String) {
+		const Ifilter = ["L", "R", "M"];
+		const splitInput = input.split("").filter((item) => Ifilter.includes(item));
+		splitInput.forEach((val) => {
+			switch (val) {
+				case "L":
+					this.turn("Left", 1);
+					break;
+				case "R":
+					this.turn("Right", 1);
+					break;
+				case "M":
+					this.move(1);
+					break;
+			}
+		});
 	}
 }
 
