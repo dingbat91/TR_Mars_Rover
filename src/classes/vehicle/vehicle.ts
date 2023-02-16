@@ -1,5 +1,6 @@
 // This file contains all type information regarding vehicles
 
+import inquirer from "inquirer";
 import { MapGrid } from "../grid/grid";
 import { uniqueID } from "../misc/counter";
 import {
@@ -150,7 +151,7 @@ abstract class vehicle extends uniqueID {
 	/**
 	 * Displays a list of modules currently installed on the vehicle.
 	 */
-	displayModules() {
+	async displayModules() {
 		console.log(`Module list:`);
 		for (const [key, value] of Object.entries(this.modules)) {
 			console.log(`------${key}-----`);
@@ -162,6 +163,11 @@ abstract class vehicle extends uniqueID {
 				}
 			}
 			console.log(`--------------------------------`);
+			await inquirer.prompt({
+				type: "confirm",
+				name: "pressany",
+				message: "press enter to continue...",
+			});
 		}
 	}
 

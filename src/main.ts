@@ -69,7 +69,6 @@ Mostly UI so not unit tested.
 */
 async function GameLoop(mapGrid: MapGrid) {
 	//Error Code Variable
-	let issue: string | number = 0;
 
 	//Initialise Rover
 	let activeRover = new Rover(mapGrid);
@@ -119,6 +118,7 @@ async function GameLoop(mapGrid: MapGrid) {
 	activeRover.initVic(ROVERANS.vehX, ROVERANS.vehY, ROVERANS.cardinal);
 
 	// Main Loop
+	let issue: string | number = 0;
 	let running = true;
 	while (running) {
 		//display map
@@ -126,7 +126,9 @@ async function GameLoop(mapGrid: MapGrid) {
 		let locData = activeRover.reportLocation();
 		mapGrid.displayGrid();
 		console.log("----------");
+		if (issue === undefined) issue = 0;
 		if (issue != 0) console.log(chalk.bgRedBright(issue));
+
 		console.log(
 			`--Location: ${locData.gridLoc} - Direction: ${locData.direction}--`
 		);
@@ -149,7 +151,7 @@ async function GameLoop(mapGrid: MapGrid) {
 			}
 			case "display": {
 				console.clear();
-				activeRover.displayModules();
+				await activeRover.displayModules();
 				break;
 			}
 			case "exit": {
