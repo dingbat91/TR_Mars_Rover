@@ -20,7 +20,7 @@ async function main() {
 		width: 50,
 		barHeadChar: "#",
 	});
-	await terminal.drawImage("src\\media\\mars.png", {
+	await terminal.drawImage("./src/media/mars.png", {
 		shrink: { width: 40, height: 40 },
 	});
 	PBAR.update({ progress: 0.25 });
