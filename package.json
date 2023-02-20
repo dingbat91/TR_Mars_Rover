@@ -25,8 +25,8 @@
 	},
 	"type": "module",
 	"jest": {
-		"globals":{
-			"useESM":true
+		"globals": {
+			"useESM": true
 		},
 		"transform": {
 			"^.+\\.(ts|tsx)$": [
@@ -42,7 +42,6 @@
 		"preset": "ts-jest"
 	},
 	"dependencies": {
-		"audic": "^3.0.1",
 		"chalk": "^5.2.0",
 		"chalk-template": "^0.5.0",
 		"colors": "^1.4.0",

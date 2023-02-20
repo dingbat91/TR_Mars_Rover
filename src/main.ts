@@ -1,4 +1,3 @@
-import Audic from "audic";
 import chalk from "chalk";
 import terminalkit from "terminal-kit";
 import { GameMenu } from "./menus/GameMenu";
@@ -32,22 +31,10 @@ async function main() {
 	PBAR.update({ progress: 0.5 });
 	//------------------
 
-	//Audio Code--------
-	const audic = new Audic("\\src\\media\\audio\\StarTrek.mp3");
-	PBAR.update({ progress: 0.75 });
-	audic.volume = 0.3;
-	audic.currentTime = 5000;
-	await audic.play().catch((err) => {
-		console.log("There was an error! No cool music for you :(");
-	});
-	PBAR.update({ progress: 1, title: "Done!" });
-	//------------------
-
 	//menu code---------
 	let menuResult: Answers = await MainMenu();
 	switch (menuResult.mainMenuChoice) {
 		case "new": {
-			audic.destroy();
 			GameLoop(
 				new MapGrid(menuResult.xLength + 1, menuResult.yLength + 1, true)
 			);
@@ -56,7 +43,6 @@ async function main() {
 		case "exit": {
 			console.log("Goodbye!");
 
-			audic.destroy();
 			return;
 		}
 	}
