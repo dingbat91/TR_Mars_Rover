@@ -23,12 +23,12 @@ async function main() {
 	await terminal.drawImage("./src/media/mars.png", {
 		shrink: { width: 40, height: 40 },
 	});
-	PBAR.update({ progress: 0.25 });
+	PBAR.update({ progress: 0.5 });
 	console.log(
 		chalk.bgRed.bold("---Welcome to the Australian Mars Rover Program!---")
 	);
 	console.log(chalk.bgRed.bold("---    Written by Matthew Hanson!    ---"));
-	PBAR.update({ progress: 0.5 });
+	PBAR.update({ progress: 1 });
 	//------------------
 
 	//menu code---------
